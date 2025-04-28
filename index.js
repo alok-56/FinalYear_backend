@@ -3,8 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
-const path = require("path");
-const fs = require("fs");
+
 
 // Routes
 const authRoutes = require("./routes/auth");
@@ -21,14 +20,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Create directory for QR codes if it doesn't exist
-const qrDirectory = path.join(__dirname, 'qrcodes');
-if (!fs.existsSync(qrDirectory)) {
-  fs.mkdirSync(qrDirectory, { recursive: true });
-}
 
-// Serve static files for QR codes
-app.use('/qrcodes', express.static(path.join(__dirname, 'qrcodes')));
 
 // API Routes
 app.use("/api/auth", authRoutes);
